@@ -56,20 +56,20 @@ class Program
 
     static string CreateClientToken(SigningCredentials signingCredentials, string audience, string issuer, string scope)
     {
-        var now = DateTimeOffset.UtcNow;
-        var tokenHandler = new JwtSecurityTokenHandler();
+        var linuxEpochSeconds = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
         var token = new JwtSecurityToken(
             issuer: issuer,
             audience: audience,
             claims: new List<Claim>()
             {
                 new Claim("jti", Guid.NewGuid().ToString()),
-                new Claim("iat", now.ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64),
+                new Claim("iat", linuxEpochSeconds.ToString(), ClaimValueTypes.Integer64),
+                new Claim("exp", (linuxEpochSeconds + 120).ToString(), ClaimValueTypes.Integer64),
                 new Claim("scope", scope)
             },
-            expires: now.DateTime.AddSeconds(120),
             signingCredentials: signingCredentials);
 
+        var tokenHandler = new JwtSecurityTokenHandler();
         return tokenHandler.WriteToken(token);
     }
 
