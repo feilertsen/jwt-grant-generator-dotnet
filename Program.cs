@@ -27,16 +27,14 @@ class Program
 
         var clientAssertionToken = CreateClientToken(signingCredentials, tokenUrl, clientId, scope);
 
-        Console.WriteLine("Client assertion token:");
+        Console.WriteLine("\nClient assertion token:");
         Console.WriteLine(clientAssertionToken);
-        Console.WriteLine();
 
         var response = await RequestTokenAsync(clientAssertionToken, tokenUrl);
         var responseJson = await response.Content.ReadAsStringAsync();
 
         Console.WriteLine("\nToken response:");
         Console.WriteLine(JsonPrettify(responseJson));
-        Console.ReadLine();
     }
 
     static async Task<HttpResponseMessage> RequestTokenAsync(string clientToken, string tokenUrl)
@@ -58,10 +56,10 @@ class Program
     {
         var linuxEpochSeconds = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
         var token = new JwtSecurityToken(
-            issuer: issuer,
-            audience: audience,
             claims: new List<Claim>()
             {
+                new Claim("aud", audience),
+                new Claim("iss", issuer),
                 new Claim("jti", Guid.NewGuid().ToString()),
                 new Claim("iat", linuxEpochSeconds.ToString(), ClaimValueTypes.Integer64),
                 new Claim("exp", (linuxEpochSeconds + 120).ToString(), ClaimValueTypes.Integer64),
