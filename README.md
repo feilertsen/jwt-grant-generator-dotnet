@@ -1,4 +1,4 @@
-# Maskinporten client authentication example (jwt-grant-generator-csharp)
+# jwt-grant-generator-csharp
 
 An example on how to retrieve tokens for accessing Maskinporten protected APIs (fdir, ID-porten, etc.). Dotnet port of https://github.com/difi/jwt-grant-generator.
 
