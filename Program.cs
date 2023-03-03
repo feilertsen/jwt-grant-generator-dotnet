@@ -21,11 +21,11 @@ class Program
         //var cert = new X509Certificate2("file...");
         //var signingCredentials2 = new SigningCredentials(new X509SecurityKey(cert), SecurityAlgorithms.RsaSha256Signature);
 
+        // Configuration
         var tokenUrl = "https://maskinporten.no/token";
         var clientId = "a2f9b9e6-c34c-4805-a163-ae29f1559253";
         var scope = "fdir:echoapi";
 
-        // Essentially what https://github.com/difi/jwt-grant-generator does
         var clientAssertionToken = CreateClientToken(signingCredentials, tokenUrl, clientId, scope);
 
         Console.WriteLine("Client assertion token:");

@@ -1,11 +1,15 @@
-# Maskinporten client authentication example
+# Maskinporten client authentication example (jwt-grant-generator-csharp)
 
-An example on how to retrieve tokens for accessing Maskinporten protected APIs (fdir, ID-porten, etc.). See https://github.com/difi/jwt-grant-generator for more thorough information.
+An example on how to retrieve tokens for accessing Maskinporten protected APIs (fdir, ID-porten, etc.). Dotnet port of https://github.com/difi/jwt-grant-generator.
 
-> Scopes, claims and grant type might differ depending on your usage (service provider).
-
-
-The technique is described [here](https://openid.net/specs/openid-connect-core-1_0.html#ClientAuthentication) and is based on the OAuth JWT assertion specification ([RFC 7523](https://tools.ietf.org/html/rfc7523)).
+Scopes, claims and grant type might differ depending on your usage (service provider).
 
 
 > **NB:** Not production ready code. I take no liability for usage.
+
+
+## **Running the example**
+
+```bash
+dotnet run
+```
