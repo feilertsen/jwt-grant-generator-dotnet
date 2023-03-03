@@ -1,5 +1,4 @@
-﻿using IdentityModel;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text.Json;
@@ -57,7 +56,7 @@ class Program
 
     static string CreateClientToken(SigningCredentials signingCredentials, string audience, string issuer, string scope)
     {
-        var now = DateTime.UtcNow;
+        var now = DateTimeOffset.UtcNow;
         var tokenHandler = new JwtSecurityTokenHandler();
         var token = new JwtSecurityToken(
             issuer: issuer,
@@ -65,10 +64,10 @@ class Program
             claims: new List<Claim>()
             {
                 new Claim("jti", Guid.NewGuid().ToString()),
-                new Claim("iat", now.ToEpochTime().ToString(), ClaimValueTypes.Integer64),
+                new Claim("iat", now.ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64),
                 new Claim("scope", scope)
             },
-            expires: now.AddMinutes(1),
+            expires: now.DateTime.AddSeconds(120),
             signingCredentials: signingCredentials);
 
         return tokenHandler.WriteToken(token);
